@@ -3,6 +3,7 @@
 use App\Http\Controllers\CreateController;
 use App\Http\Controllers\DeleteController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UpdateController;
 use App\Http\Controllers\ShowController;
 use Illuminate\Support\Facades\Route;
@@ -18,27 +19,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Index */
-Route::get('/', [HomeController::class, 'index']);
-
-
-/* Show */
-Route::get('/show/{id}', [ShowController::class, 'index']);
-
-
-/* Create */
-Route::controller(CreateController::class)->group(function (){
-    Route::get('/create', 'index');
-    Route::post('/create', 'create');
-});
-
-
-/* Update */
-Route::controller(UpdateController::class)->group(function (){
-    Route::get('/update/{id}', 'index');
+Route::controller(ImageController::class)->group(function (){
+    Route::get('/', 'home');
+    Route::view('/create', 'create');
+    Route::post('/create', 'store');
+    Route::get('/update/{id}', 'edit');
     Route::post('/update/{id}', 'update');
+    Route::get('/show/{id}', 'show');
+    Route::get('/delete/{id}', 'delete');
 });
 
-
-/* Delete */
-Route::get('/delete/{id}', [DeleteController::class, 'delete']);
